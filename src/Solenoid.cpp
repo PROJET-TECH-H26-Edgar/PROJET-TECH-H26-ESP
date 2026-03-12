@@ -1,7 +1,7 @@
 #include "Solenoide.h"
 
-#define ETAT_VERROUILLE HIGH   
-#define ETAT_OUVERT LOW 
+#define ETAT_VERROUILLE LOW   
+#define ETAT_OUVERT HIGH 
 
 Solenoide::Solenoide(uint8_t pin):
     pin(pin),

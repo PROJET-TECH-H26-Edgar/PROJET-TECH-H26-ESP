@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include "MqttConn.h"
 #include "Solenoide.h"
+#include "RFID.h"
 
 #define MAX_SOLENOIDES 4
 
@@ -15,7 +16,7 @@ const char* mqtt_user = "apiuser";
 const char* mqtt_mdp = "ApiPass10!";
 
 Solenoide* solenoides[MAX_SOLENOIDES];
-
+RFID rfid;
 
 MqttConn mqttConn(ssid,
                  user_wifi,
@@ -37,7 +38,8 @@ void setup() {
       solenoides[i]->begin();
     }
 
-  
+  rfid.begin();
+
   mqttConn.onMessage([](const char* topic, const char* message) {
     int separateur = String(message).indexOf(';');
     if (separateur > 0) {
@@ -59,4 +61,9 @@ void loop() {
     for (int i = 0; i < MAX_SOLENOIDES; i++) {
     solenoides[i]->update();
   }
+
+    if (rfid.isCardPresent()) {
+      String uid = rfid.getCardUID();
+      Serial.println("Carte détectée : " + uid);
+    }
 }
