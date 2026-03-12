@@ -1,18 +1,62 @@
 #include <Arduino.h>
+#include "MqttConn.h"
+#include "Solenoide.h"
 
-// put function declarations here:
-int myFunction(int, int);
+#define MAX_SOLENOIDES 4
+
+const char * ssid = "CegepRDL";
+const char* user_wifi = "2435196";
+const char * mdp_wifi = "S4Pf!qy0";
+
+const char* mqtt_serveur = "138.68.23.149";
+const int mqtt_port = 8883;
+
+const char* mqtt_user = "apiuser";
+const char* mqtt_mdp = "ApiPass10!";
+
+Solenoide* solenoides[MAX_SOLENOIDES];
+
+
+MqttConn mqttConn(ssid,
+                 user_wifi,
+                 mdp_wifi,
+                 mqtt_serveur,
+                 mqtt_port,
+                 mqtt_user,
+                 mqtt_mdp);
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+    mqttConn.begin();
+
+    solenoides[0] = new Solenoide(2);
+    solenoides[1] = new Solenoide(0);
+    solenoides[2] = new Solenoide(4);
+    solenoides[3] = new Solenoide(16);
+
+    for (int i = 0; i < MAX_SOLENOIDES; i++) {
+      solenoides[i]->begin();
+    }
+
+  
+  mqttConn.onMessage([](const char* topic, const char* message) {
+    int separateur = String(message).indexOf(';');
+    if (separateur > 0) {
+      int numero = String(message).substring(0, separateur).toInt();
+      String action = String(message).substring(separateur + 1);
+
+      if (numero >= 0 && numero < MAX_SOLENOIDES) {
+        if (action == "ouvrir") solenoides[numero]->ouvrir(5000);
+        else if (action == "fermer") solenoides[numero]->fermer();
+      }
+    }
+  });
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-}
+    mqttConn.loop();
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+      
+    for (int i = 0; i < MAX_SOLENOIDES; i++) {
+    solenoides[i]->update();
+  }
 }
