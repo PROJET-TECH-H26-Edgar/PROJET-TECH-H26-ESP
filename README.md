@@ -11,5 +11,10 @@
 - Modifier les paramètres de connexion
     - Wifi
     - Mqtt
+ 
+- Modifier au besoin les "Pins" utilisées
+
+- Lancer la compilation et ouvrir le moniteur serie
+
 
 
