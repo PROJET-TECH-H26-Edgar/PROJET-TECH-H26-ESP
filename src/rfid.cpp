@@ -5,6 +5,9 @@ RFID::RFID() : mfrc522(SS_PIN, RST_PIN) {}
 void RFID::begin() {
     SPI.begin();
     mfrc522.PCD_Init();
+    byte version = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
+    Serial.print("Version MFRC522 : 0x");
+    Serial.println(version, HEX);
     Serial.println("Lecteur RFID initialisé.");
 }
  

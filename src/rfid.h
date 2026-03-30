@@ -5,8 +5,8 @@
 #include <MFRC522.h>
  
 // Brochages ESP32
-#define RST_PIN 22
-#define SS_PIN  21
+#define RST_PIN 21
+#define SS_PIN  5
  
 class RFID {
 public:

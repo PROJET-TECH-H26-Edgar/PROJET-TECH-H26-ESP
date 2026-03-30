@@ -30,9 +30,9 @@ void setup() {
     mqttConn.begin();
 
     solenoides[0] = new Solenoide(2);
-    solenoides[1] = new Solenoide(0);
-    solenoides[2] = new Solenoide(4);
-    solenoides[3] = new Solenoide(16);
+    solenoides[1] = new Solenoide(4);
+    solenoides[2] = new Solenoide(16);
+    solenoides[3] = new Solenoide(17);
 
     for (int i = 0; i < MAX_SOLENOIDES; i++) {
       solenoides[i]->begin();
