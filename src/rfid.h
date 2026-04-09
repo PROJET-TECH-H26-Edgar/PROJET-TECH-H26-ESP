@@ -15,6 +15,7 @@ public:
     bool isCardPresent();
     String getCardUID();
     void reset();
+    void sendUID();
  
 private:
     MFRC522 mfrc522;

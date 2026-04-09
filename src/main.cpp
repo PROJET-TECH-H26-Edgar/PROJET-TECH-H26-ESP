@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "MqttConn.h"
+#include "Mqtt.h"
 #include "Solenoide.h"
 #include "RFID.h"
 
@@ -35,6 +35,10 @@ MqttConn mqttConn(ssid,
                  mqtt_user,
                  mqtt_mdp);
 
+void sendUID(const String& uid) {
+    mqttConn.publish("distributeur/rfid", uid.c_str());
+}
+
 void setup() {
     mqttConn.begin();
 
@@ -64,6 +68,7 @@ void setup() {
       }
     }
   });
+  
 }
 
 void loop() {
@@ -82,5 +87,6 @@ void loop() {
     if (rfid.isCardPresent()) {
         String uid = rfid.getCardUID();
         Serial.println("Carte détectée : " + uid);
+        sendUID(uid);
     }
 }

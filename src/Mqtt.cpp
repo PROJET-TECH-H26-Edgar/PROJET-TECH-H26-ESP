@@ -1,4 +1,4 @@
-#include "MqttConn.h"
+#include "Mqtt.h"
 
 // MqttConn::MqttConn(const char* ssid,const char * user_wifi, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp) : 
 //     _ssid(ssid),
@@ -97,3 +97,4 @@ void MqttConn::callback(char* topic, byte* payload, unsigned int length) {
         _userCallback(topic, message.c_str());
     }
 }
+
