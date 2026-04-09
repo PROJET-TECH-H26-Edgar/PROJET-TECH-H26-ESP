@@ -14,9 +14,11 @@ class Solenoide {
     public : 
         Solenoide(uint8_t pin = 0);
         void begin();
-        void ouvrir(unsigned long durationMs);
+        void open();
         void update();
-        void fermer();
+        void close();
+        void quickOpen();
+        bool getIsActive() const { return isActive; }
 
 };
 

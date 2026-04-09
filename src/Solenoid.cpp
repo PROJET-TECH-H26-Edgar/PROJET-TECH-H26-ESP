@@ -15,20 +15,25 @@ void Solenoide::begin() {
 
 }
 
-void Solenoide::ouvrir(unsigned long durationMs) {
-  duree = durationMs;
-  tempsDebut = millis();
+void Solenoide::open() {
   isActive = true;
   digitalWrite(pin, ETAT_OUVERT);
+  delay(500);
+  digitalWrite(pin, ETAT_VERROUILLE);
+  delay(500);
+  digitalWrite(pin, ETAT_OUVERT);
+  delay(500);
+  digitalWrite(pin, ETAT_VERROUILLE);
 }
+
 
 void Solenoide::update() {
   if (isActive && millis() - tempsDebut >= duree) {
-    fermer();
+    close();
   }
 }
 
-void Solenoide::fermer() {
+void Solenoide::close() {
   digitalWrite(pin, ETAT_VERROUILLE);
   isActive = false;
 }

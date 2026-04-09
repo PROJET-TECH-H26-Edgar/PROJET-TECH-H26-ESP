@@ -14,7 +14,7 @@ void RFID::begin() {
 bool RFID::isCardPresent() {
     return mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial();
 }
- 
+
 String RFID::getCardUID() {
     String uid = "";
     for (byte i = 0; i < mfrc522.uid.size; i++) {
@@ -23,7 +23,14 @@ String RFID::getCardUID() {
         if (i < mfrc522.uid.size - 1) uid += ":";
     }
     uid.toUpperCase();
+
     mfrc522.PICC_HaltA();
+    mfrc522.PCD_StopCrypto1(); 
     return uid;
+}
+
+void RFID::reset() {
+    mfrc522.PCD_Reset();
+    mfrc522.PCD_Init();
 }
  

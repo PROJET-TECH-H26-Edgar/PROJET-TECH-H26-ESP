@@ -1,8 +1,16 @@
 #include "MqttConn.h"
 
-MqttConn::MqttConn(const char* ssid,const char * user_wifi, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp) : 
+// MqttConn::MqttConn(const char* ssid,const char * user_wifi, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp) : 
+//     _ssid(ssid),
+//     _user_wifi(user_wifi),
+//     _mdp_wifi(mdp_wifi),
+//     _mqtt_serveur(mqtt_serveur),
+//     _port(port),
+//     _mqtt_user(mqtt_user),
+//     _mqtt_mdp(mqtt_mdp),
+//     _client(_secureClient) {};
+MqttConn::MqttConn(const char* ssid, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp) : 
     _ssid(ssid),
-    _user_wifi(user_wifi),
     _mdp_wifi(mdp_wifi),
     _mqtt_serveur(mqtt_serveur),
     _port(port),
@@ -25,13 +33,13 @@ void MqttConn::setupWifi() {
     WiFi.disconnect(true);
     WiFi.mode(WIFI_STA);
 
-    esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)_user_wifi, strlen(_user_wifi));
-    esp_wifi_sta_wpa2_ent_set_username((uint8_t *)_user_wifi, strlen(_user_wifi));
-    esp_wifi_sta_wpa2_ent_set_password((uint8_t *)_mdp_wifi, strlen(_mdp_wifi));
+    // esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)_user_wifi, strlen(_user_wifi));
+    // esp_wifi_sta_wpa2_ent_set_username((uint8_t *)_user_wifi, strlen(_user_wifi));
+    // esp_wifi_sta_wpa2_ent_set_password((uint8_t *)_mdp_wifi, strlen(_mdp_wifi));
 
-    esp_wifi_sta_wpa2_ent_enable();
+    // esp_wifi_sta_wpa2_ent_enable();
 
-    WiFi.begin(_ssid);
+    WiFi.begin(_ssid, _mdp_wifi);
 
     Serial.print("Connexion WiFi");
 

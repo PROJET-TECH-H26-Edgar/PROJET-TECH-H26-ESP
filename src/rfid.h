@@ -14,6 +14,7 @@ public:
     void begin();
     bool isCardPresent();
     String getCardUID();
+    void reset();
  
 private:
     MFRC522 mfrc522;
