@@ -1,36 +1,38 @@
 #include "RFID.h"
- 
-RFID::RFID() : mfrc522(SS_PIN, RST_PIN) {}
- 
+
+RFID::RFID(): rfid(SS, RST) {}
+
 void RFID::begin() {
-    SPI.begin();
-    mfrc522.PCD_Init();
-    byte version = mfrc522.PCD_ReadRegister(mfrc522.VersionReg);
-    Serial.print("Version MFRC522 : 0x");
-    Serial.println(version, HEX);
-    Serial.println("Lecteur RFID initialisé.");
+    SPI.begin(18, 19, 23);
+
+    rfid.PCD_Init();
+
+
+    Serial.println("RFID initialisé");
 }
- 
+
 bool RFID::isCardPresent() {
-    return mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial();
+    return rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial();
 }
 
 String RFID::getCardUID() {
+    //aide de l'ia pour le lecture de la carte rfid
     String uid = "";
-    for (byte i = 0; i < mfrc522.uid.size; i++) {
-        if (mfrc522.uid.uidByte[i] < 0x10) uid += "0";
-        uid += String(mfrc522.uid.uidByte[i], HEX);
-        if (i < mfrc522.uid.size - 1) uid += ":";
+
+    for (byte i = 0; i < rfid.uid.size; i++) {
+        if (rfid.uid.uidByte[i] < 0x10) uid += "0";
+        uid += String(rfid.uid.uidByte[i], HEX);
+        if (i < rfid.uid.size - 1) uid += ":";
     }
+
     uid.toUpperCase();
 
-    mfrc522.PICC_HaltA();
-    mfrc522.PCD_StopCrypto1(); 
+    rfid.PICC_HaltA();
+    rfid.PCD_StopCrypto1();
+
     return uid;
 }
 
 void RFID::reset() {
-    mfrc522.PCD_Reset();
-    mfrc522.PCD_Init();
+    rfid.PCD_Reset();
 }
- 

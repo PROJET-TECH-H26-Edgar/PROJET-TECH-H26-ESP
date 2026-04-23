@@ -4,9 +4,8 @@
 #include <SPI.h>
 #include <MFRC522.h>
  
-// Brochages ESP32
-#define RST_PIN 21
-#define SS_PIN  5
+#define SS 2
+#define RST 21
  
 class RFID {
 public:
@@ -16,9 +15,10 @@ public:
     String getCardUID();
     void reset();
     void sendUID();
+    void setActive(int reader);
  
 private:
-    MFRC522 mfrc522;
+    MFRC522 rfid;
 };
  
 #endif
