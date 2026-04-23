@@ -42,7 +42,7 @@ void MqttConn::setupWifi() {
     WiFi.begin(_ssid, _mdp_wifi);
 
     Serial.print("Connexion WiFi");
-
+    //petite boucle par chat gpt pour savoir si la connexion est en cours car je ne savais jamais si ca marchait
     while (WiFi.status() != WL_CONNECTED) {
         delay(500);
         Serial.print(".");

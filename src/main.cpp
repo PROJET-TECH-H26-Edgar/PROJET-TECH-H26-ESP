@@ -52,7 +52,8 @@ void setup() {
     }
 
   rfid.begin();
-
+    // aide de l'ia pour decoder mon message mqtt
+    //l'ai ma donner un exemple et j'ai écrit le code moi même
   mqttConn.onMessage([](const char* topic, const char* message) {
     int separateur = String(message).indexOf(';');
     if (separateur > 0) {
