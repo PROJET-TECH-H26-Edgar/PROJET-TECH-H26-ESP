@@ -26,6 +26,15 @@ void Solenoide::open() {
   digitalWrite(pin, ETAT_VERROUILLE);
 }
 
+void Solenoide::openDoor(){
+  digitalWrite(pin, ETAT_OUVERT);
+  delay(8000);
+  digitalWrite(pin, ETAT_VERROUILLE);
+  delay(1000);
+  digitalWrite(pin, ETAT_OUVERT);
+  delay(200);
+  digitalWrite(pin, ETAT_VERROUILLE);
+}
 
 void Solenoide::update() {
   if (isActive && millis() - tempsDebut >= duree) {

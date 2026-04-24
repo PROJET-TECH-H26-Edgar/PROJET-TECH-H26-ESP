@@ -3,7 +3,7 @@
 #include "Solenoide.h"
 #include "RFID.h"
 
-#define MAX_SOLENOIDES 4
+#define MAX_SOLENOIDES 5
 
 // const char * ssid = "iPhone de Edgar";
 // const char* user_wifi = "2435196";
@@ -42,10 +42,11 @@ void sendUID(const String& uid) {
 void setup() {
     mqttConn.begin();
 
-    solenoides[0] = new Solenoide(2);
-    solenoides[1] = new Solenoide(4);
+    solenoides[0] = new Solenoide(4);
+    solenoides[1] = new Solenoide(12);
     solenoides[2] = new Solenoide(16);
     solenoides[3] = new Solenoide(17);
+    solenoides[4] = new Solenoide(5);
 
     for (int i = 0; i < MAX_SOLENOIDES; i++) {
       solenoides[i]->begin();
@@ -64,6 +65,7 @@ void setup() {
         if (action == "ouvrir")
         { 
           solenoides[numero]->open();
+          solenoides[0]->openDoor();
         }
         else if (action == "fermer") solenoides[numero]->close();
       }
@@ -74,7 +76,7 @@ void setup() {
 
 void loop() {
     mqttConn.loop();
-
+    delay(50);
     bool wasActive = false;
     for (int i = 0; i < MAX_SOLENOIDES; i++) {
         bool before = solenoides[i]->getIsActive();
@@ -86,8 +88,13 @@ void loop() {
     if (wasActive) rfid.reset();
 
     if (rfid.isCardPresent()) {
-        String uid = rfid.getCardUID();
-        Serial.println("Carte détectée : " + uid);
-        sendUID(uid);
-    }
+    String uid = rfid.getCardUID();
+    Serial.println("RFID 1 : " + uid);
+    sendUID(uid);
+    delay(300);
+}
+
+
+    
+    
 }
