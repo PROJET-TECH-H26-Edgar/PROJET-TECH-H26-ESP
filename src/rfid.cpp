@@ -12,9 +12,10 @@ void RFID::begin() {
 }
 
 bool RFID::isCardPresent() {
-    return rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial();
+    if (!rfid.PICC_IsNewCardPresent()) return false;
+    if (!rfid.PICC_ReadCardSerial()) return false;
+    return true;
 }
-
 String RFID::getCardUID() {
     //aide de l'ia pour le lecture de la carte rfid
     String uid = "";
@@ -35,4 +36,7 @@ String RFID::getCardUID() {
 
 void RFID::reset() {
     rfid.PCD_Reset();
+    delay(50);
+    rfid.PCD_Init();
+    delay(50);
 }
