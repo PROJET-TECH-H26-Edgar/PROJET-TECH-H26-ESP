@@ -6,7 +6,10 @@
  
 #define SS 2
 #define RST 21
- 
+#define SCK 18
+#define MISO 19
+#define MOSI 23
+
 class RFID {
 public:
     RFID();
