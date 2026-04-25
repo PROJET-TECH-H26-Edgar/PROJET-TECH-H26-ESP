@@ -4,6 +4,11 @@
 #include "RFID.h"
 
 #define MAX_SOLENOIDES 5
+#define SOLENOIDE_PORTE 4
+#define SOLENOIDE1 12
+#define SOLENOIDE2 16
+#define SOLENOIDE3 17
+#define SOLENOIDE4 5
 
 // const char * SSID = "iPhone de Edgar";
 // const char* USER_WIFI = "2435196";
@@ -19,6 +24,7 @@ const char* MQTT_MDP = "ApiPass10!";
 
 Solenoide* solenoides[MAX_SOLENOIDES];
 RFID rfid;
+
 
 // MqttConn mqttConn(SSID,
 //                  USER_WIFI
@@ -41,11 +47,11 @@ void sendUID(const String& uid) {
 void setup() {
     mqttConn.begin();
 
-    solenoides[0] = new Solenoide(4);
-    solenoides[1] = new Solenoide(12);
-    solenoides[2] = new Solenoide(16);
-    solenoides[3] = new Solenoide(17);
-    solenoides[4] = new Solenoide(5);
+    solenoides[0] = new Solenoide(SOLENOIDE_PORTE);
+    solenoides[1] = new Solenoide(SOLENOIDE1);
+    solenoides[2] = new Solenoide(SOLENOIDE2);
+    solenoides[3] = new Solenoide(SOLENOIDE3);
+    solenoides[4] = new Solenoide(SOLENOIDE4);
 
     for (int i = 0; i < MAX_SOLENOIDES; i++) {
       solenoides[i]->begin();
