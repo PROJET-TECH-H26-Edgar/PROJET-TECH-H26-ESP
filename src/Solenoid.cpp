@@ -46,3 +46,7 @@ void Solenoide::close() {
   digitalWrite(pin, ETAT_VERROUILLE);
   isActive = false;
 }
+
+bool Solenoide::getIsActive(){
+  return isActive;
+}

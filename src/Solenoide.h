@@ -18,7 +18,7 @@ class Solenoide {
         void update();
         void close();
         void openDoor();
-        bool getIsActive() const { return isActive; }
+        bool getIsActive();
 
 };
 
