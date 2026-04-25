@@ -14,13 +14,13 @@ class MqttConn {
     void setupWifi();
     void reconnect();
     static void callback(char* topic, byte* payload, unsigned int length);
-    const char* _ssid;
-    // const char * _user_wifi;
-    const char* _mdp_wifi;
+    const char* _SSID;
+    // const char * _USER_WIFI;
+    const char* _MDP_WIFI;
     int _port;
-    const char* _mqtt_serveur;
-    const char* _mqtt_user;
-    const char* _mqtt_mdp;
+    const char* _MQTT_SERVER;
+    const char* _MQTT_USER;
+    const char* _MQTT_MDP;
     int _mqtt_port;
 
     WiFiClientSecure _secureClient;
@@ -28,11 +28,11 @@ class MqttConn {
     static MessageCallback _userCallback; // callback défini par le main (donné par l'ia)
 
     public: 
-    // MqttConn(const char* ssid,const char* user_wifi, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp);
-    MqttConn(const char* ssid, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp);
+   // MqttConn(const char* SSID, cont char* USER_WIFI, const char* MDP_WIFI, const char* MQTT_SERVER, int PORT, const char* MQTT_USER, const char* MQTT_MDP);
+    MqttConn(const char* SSID, const char* MDP_WIFI, const char* MQTT_SERVER, int PORT, const char* MQTT_USER, const char* MQTT_MDP);
     void begin();
     void loop();
-    void publish(const char* topic, const char* message);
+    void publish(const char* TOPIC, const char* MESSAGE);
     void onMessage(MessageCallback cb);
 };
 

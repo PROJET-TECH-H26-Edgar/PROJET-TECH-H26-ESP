@@ -5,35 +5,34 @@
 
 #define MAX_SOLENOIDES 5
 
-// const char * ssid = "iPhone de Edgar";
-// const char* user_wifi = "2435196";
-// const char * mdp_wifi = "S4Pf!qy0";
-const char * ssid = "iPhone de Edgar ";
-// const char* user_wifi = "2435196";
-const char * mdp_wifi = "edgar1011";
+// const char * SSID = "iPhone de Edgar";
+// const char* USER_WIFI = "2435196";
+// const char * MDP_WIFI = "S4Pf!qy0";
+const char * SSID = "iPhone de Edgar ";
+const char * MDP_WIFI = "edgar1011";
 
-const char* mqtt_serveur = "138.68.23.149";
-const int mqtt_port = 8883;
+const char* MQTT_SERVER = "138.68.23.149";
+const int MQTT_PORT = 8883;
 
-const char* mqtt_user = "apiuser";
-const char* mqtt_mdp = "ApiPass10!";
+const char* MQTT_USER = "apiuser";
+const char* MQTT_MDP = "ApiPass10!";
 
 Solenoide* solenoides[MAX_SOLENOIDES];
 RFID rfid;
 
-// MqttConn mqttConn(ssid,
-//                  user_wifi,
-//                  mdp_wifi,
-//                  mqtt_serveur,
-//                  mqtt_port,
-//                  mqtt_user,
-//                  mqtt_mdp);
-MqttConn mqttConn(ssid,
-                 mdp_wifi,
-                 mqtt_serveur,
-                 mqtt_port,
-                 mqtt_user,
-                 mqtt_mdp);
+// MqttConn mqttConn(SSID,
+//                  USER_WIFI
+//                  MDP_WIFI,
+//                  MQTT_SERVER,
+//                  MQTT_PORT,
+//                  MQTT_USER,
+//                  MQTT_MDP);
+MqttConn mqttConn(SSID,
+                 MDP_WIFI,
+                 MQTT_SERVER,
+                 MQTT_PORT,
+                 MQTT_USER,
+                 MQTT_MDP);
 
 void sendUID(const String& uid) {
     mqttConn.publish("distributeur/rfid", uid.c_str());

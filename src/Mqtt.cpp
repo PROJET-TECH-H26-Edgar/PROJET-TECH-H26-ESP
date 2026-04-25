@@ -9,14 +9,15 @@
 //     _mqtt_user(mqtt_user),
 //     _mqtt_mdp(mqtt_mdp),
 //     _client(_secureClient) {};
-MqttConn::MqttConn(const char* ssid, const char* mdp_wifi, const char* mqtt_serveur, int port, const char* mqtt_user, const char* mqtt_mdp) : 
-    _ssid(ssid),
-    _mdp_wifi(mdp_wifi),
-    _mqtt_serveur(mqtt_serveur),
-    _port(port),
-    _mqtt_user(mqtt_user),
-    _mqtt_mdp(mqtt_mdp),
-    _client(_secureClient) {};
+MqttConn::MqttConn(const char* SSID, const char* MDP_WIFI, const char* MQTT_SERVER, int PORT, const char* MQTT_USER, const char* MQTT_MDP) :
+    _SSID(SSID),
+    _MDP_WIFI(MDP_WIFI),
+    _MQTT_SERVER(MQTT_SERVER),
+    _port(PORT),
+    _MQTT_USER(MQTT_USER),
+    _MQTT_MDP(MQTT_MDP),
+    _client(_secureClient)
+{}
     
     
 void MqttConn::begin() {
@@ -24,7 +25,7 @@ void MqttConn::begin() {
     setupWifi();
 
     _secureClient.setInsecure();
-    _client.setServer(_mqtt_serveur, _port);
+    _client.setServer(_MQTT_SERVER, _port);
     _client.setCallback(MqttConn::callback); 
     }
 
@@ -39,7 +40,7 @@ void MqttConn::setupWifi() {
 
     // esp_wifi_sta_wpa2_ent_enable();
 
-    WiFi.begin(_ssid, _mdp_wifi);
+    WiFi.begin(_SSID, _MDP_WIFI);
 
     Serial.print("Connexion WiFi");
     //petite boucle par chat gpt pour savoir si la connexion est en cours car je ne savais jamais si ca marchait
@@ -55,7 +56,7 @@ void MqttConn::setupWifi() {
 void MqttConn::reconnect() {
     while (!_client.connected()) {
 
-        if (_client.connect("ESP32_Client",_mqtt_user,_mqtt_mdp)) {
+        if (_client.connect("ESP32_Client",_MQTT_USER,_MQTT_MDP)) {
 
         Serial.println("MQTTS connecté !");
         _client.subscribe("distributeur/cle");
