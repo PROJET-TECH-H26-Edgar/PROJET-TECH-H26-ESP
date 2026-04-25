@@ -1,49 +1,49 @@
 #include "Solenoide.h"
 
-#define ETAT_VERROUILLE LOW   
-#define ETAT_OUVERT HIGH 
+#define CLOSE LOW   
+#define OPEN HIGH 
 
 Solenoide::Solenoide(uint8_t pin):
     pin(pin),
-    tempsDebut(0),
-    duree(0),
+    startTime(0),
+    time(0),
     isActive(false) {}
 
 void Solenoide::begin() {
   pinMode(pin, OUTPUT);
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
 
 }
 
 void Solenoide::open() {
   isActive = true;
-  digitalWrite(pin, ETAT_OUVERT);
+  digitalWrite(pin, OPEN);
   delay(500);
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
   delay(500);
-  digitalWrite(pin, ETAT_OUVERT);
+  digitalWrite(pin, OPEN);
   delay(500);
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
 }
 
 void Solenoide::openDoor(){
-  digitalWrite(pin, ETAT_OUVERT);
+  digitalWrite(pin, OPEN);
   delay(8000);
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
   delay(1000);
-  digitalWrite(pin, ETAT_OUVERT);
+  digitalWrite(pin, OPEN);
   delay(200);
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
 }
 
 void Solenoide::update() {
-  if (isActive && millis() - tempsDebut >= duree) {
+  if (isActive && millis() - startTime >= time) {
     close();
   }
 }
 
 void Solenoide::close() {
-  digitalWrite(pin, ETAT_VERROUILLE);
+  digitalWrite(pin, CLOSE);
   isActive = false;
 }
 

@@ -7,8 +7,8 @@
 class Solenoide {
     private : 
         uint8_t pin;
-        unsigned long tempsDebut;
-        unsigned long duree;
+        unsigned long startTime;
+        unsigned long time;
         bool isActive;
 
     public : 
