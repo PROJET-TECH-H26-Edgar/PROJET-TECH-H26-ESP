@@ -1,9 +1,10 @@
 #include "RFID.h"
 
+
 RFID::RFID(): rfid(SS, RST) {}
 
 void RFID::begin() {
-    SPI.begin(18, 19, 23);
+    SPI.begin(SCK, MISO, MOSI);
 
     rfid.PCD_Init();
 
