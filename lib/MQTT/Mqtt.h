@@ -6,22 +6,24 @@
 #include <PubSubClient.h>
 #include "WifiManager.h"
 
-typedef void (*MessageCallback)(const char* topic, const char* message);
+#include <functional>
+
+typedef std::function<void(const char*, const char*)> MessageCallback;
 
 class MqttConn {
 private:
-    WifiManager&     _wifi;
-    const char*      _MQTT_SERVER;
-    int              _port;
-    const char*      _MQTT_USER;
-    const char*      _MQTT_MDP;
+    WifiManager& _wifi;
+    const char* _MQTT_SERVER;
+    int _port;
+    const char* _MQTT_USER;
+    const char* _MQTT_MDP;
 
     WiFiClientSecure _secureClient;
-    PubSubClient     _client;
+    PubSubClient _client;
 
+    static MqttConn* _instance;
     static MessageCallback _userCallback;
-    static void _callback(char* topic, byte* payload, unsigned int length);
-
+    
     void reconnect();
 
 public:
@@ -30,6 +32,7 @@ public:
 
     void begin();
     void loop();
+    static void _callback(char* topic, byte* payload, unsigned int length);
     void publish(const char* topic, const char* message);
     void onMessage(MessageCallback cb);
 };
