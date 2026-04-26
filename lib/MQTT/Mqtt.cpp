@@ -1,6 +1,7 @@
 #include "Mqtt.h"
 
 MessageCallback MqttConn::_userCallback = nullptr;
+MqttConn* MqttConn::_instance = nullptr;
 
 MqttConn::MqttConn(WifiManager& wifi, const char* MQTT_SERVER, int PORT,
                    const char* MQTT_USER, const char* MQTT_MDP)
@@ -13,6 +14,8 @@ MqttConn::MqttConn(WifiManager& wifi, const char* MQTT_SERVER, int PORT,
 
 void MqttConn::begin() {
     _wifi.begin();
+
+    _instance = this;
 
     _secureClient.setInsecure();
     _client.setClient(_secureClient);
@@ -46,11 +49,14 @@ void MqttConn::onMessage(MessageCallback cb) {
 }
 
 void MqttConn::_callback(char* topic, byte* payload, unsigned int length) {
+     if (!_instance) return;
     char message[length + 1];
     memcpy(message, payload, length);
     message[length] = '\0';
 
     Serial.println("Message reçu: " + String(message));
 
-    if (_userCallback) _userCallback(topic, message);
+     if (_instance->_userCallback) {
+        _instance->_userCallback(topic, message);
+    }
 }
