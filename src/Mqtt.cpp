@@ -79,14 +79,17 @@ void MqttConn::publish(const char* topic, const char* message) {
     _client.publish(topic, message);
 }
 
-MessageCallback MqttConn::_userCallback = nullptr;
+#if defined(ESP8266) || defined(ESP32)
+    std::function<void(char*, uint8_t*, unsigned int)> MqttConn::callback = nullptr;
+#else
+    void (*MqttConn::callback)(char*, uint8_t*, unsigned int) = nullptr;
+#endif
 
-
-void MqttConn::onMessage(MessageCallback cb) {
-    _userCallback = cb;
+void MqttConn::onMessage(MQTT_CALLBACK_SIGNATURE) {
+    MqttConn::callback = callback;
 }
 
-void MqttConn::callback(char* topic, byte* payload, unsigned int length) {
+void MqttConn::_internalCallback(char* topic, byte* payload, unsigned int length) {
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
@@ -94,8 +97,8 @@ void MqttConn::callback(char* topic, byte* payload, unsigned int length) {
     Serial.println("Message reçu: " + message);
 
     // Appelle le callback utilisateur si défini
-    if (_userCallback) {
-        _userCallback(topic, message.c_str());
+    if (callback) {
+        callback(topic, (uint8_t*)payload, length);
     }
 }
 
