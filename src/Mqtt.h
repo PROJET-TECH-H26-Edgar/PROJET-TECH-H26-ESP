@@ -13,7 +13,8 @@ class MqttConn {
     private:
     void setupWifi();
     void reconnect();
-    static void callback(char* topic, byte* payload, unsigned int length);
+    static MQTT_CALLBACK_SIGNATURE;
+    static void _internalCallback(char* topic, byte* payload, unsigned int length);
     const char* _SSID;
     // const char * _USER_WIFI;
     const char* _MDP_WIFI;
@@ -25,15 +26,14 @@ class MqttConn {
 
     WiFiClientSecure _secureClient;
     PubSubClient _client;
-    static MessageCallback _userCallback; // callback défini par le main (donné par l'ia)
-
+   
     public: 
    // MqttConn(const char* SSID, cont char* USER_WIFI, const char* MDP_WIFI, const char* MQTT_SERVER, int PORT, const char* MQTT_USER, const char* MQTT_MDP);
     MqttConn(const char* SSID, const char* MDP_WIFI, const char* MQTT_SERVER, int PORT, const char* MQTT_USER, const char* MQTT_MDP);
     void begin();
     void loop();
     void publish(const char* TOPIC, const char* MESSAGE);
-    void onMessage(MessageCallback cb);
+    void onMessage(MQTT_CALLBACK_SIGNATURE cb);
 };
 
 
