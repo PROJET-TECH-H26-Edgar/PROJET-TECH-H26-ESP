@@ -23,6 +23,6 @@
   const char* MQTT_SERVER = "Ip de votre serveur MQTT";
   const int MQTT_PORT = 8883; (Port du mqtts normalement inchangé)
   const char* MQTT_USER = "Votre nom d'utilisateur pour le mqtt";
-  const char\* MQTT_MDP = "Votre mot de passe pour le mqtt";
+  const char* MQTT_MDP = "Votre mot de passe pour le mqtt";
   ```
 ### Compiler le projet dans votre ESP32 du système
