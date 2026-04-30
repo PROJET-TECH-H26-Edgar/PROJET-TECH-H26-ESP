@@ -1,8 +1,7 @@
 #include "WifiManager.h"
 
 WifiManager::WifiManager(const char* SSID, const char* MDP_WIFI)
-    : _SSID(SSID), _MDP_WIFI(MDP_WIFI)
-{}
+    : _SSID(SSID), _MDP_WIFI(MDP_WIFI){}
 
 void WifiManager::begin() {
     WiFi.disconnect(true);
